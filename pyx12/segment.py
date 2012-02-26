@@ -18,7 +18,7 @@ treated as a composite element with one sub-element.
 All indexing is zero based.
 """
 
-import path
+from . import path
 from pyx12.errors import EngineError
 
 class Element(object):

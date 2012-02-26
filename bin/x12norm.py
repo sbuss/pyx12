@@ -34,7 +34,7 @@ def usage():
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'dhefo:')
-    except getopt.error, msg:
+    except getopt.error as msg:
         usage()
         return False
     debug = False

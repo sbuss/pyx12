@@ -14,7 +14,7 @@ X12 data element validation
 import re
 
 # Intrapackage imports
-from errors import IsValidError, EngineError
+from .errors import IsValidError, EngineError
 
 def IsValidDataType(str_val, data_type, charset = 'B', icvn='00401'):
     """

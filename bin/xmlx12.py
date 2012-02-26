@@ -50,7 +50,7 @@ def main():
     import getopt
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'l:o:qvh')
-    except getopt.error, msg:
+    except getopt.error as msg:
         usage()
         raise
         return False
@@ -101,7 +101,7 @@ def main():
             logger.error('File %s had errors.' % (src_filename))
             return False
     except KeyboardInterrupt:
-        print "\n[interrupt]"
+        print("\n[interrupt]")
         
     return True
 

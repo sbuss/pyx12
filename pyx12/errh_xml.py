@@ -22,8 +22,8 @@ import tempfile
 import os
 
 # Intrapackage imports
-from errors import EngineError
-from xmlwriter import XMLWriter
+from .errors import EngineError
+from .xmlwriter import XMLWriter
 
 #class error_node:
 #    def __init__(self)

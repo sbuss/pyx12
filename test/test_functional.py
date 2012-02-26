@@ -25,7 +25,7 @@ from types import *
 import tempfile
 #import difflib
 import subprocess
-import StringIO
+import io
 import sys; sys.path.insert(0, '..')
 
 # Intrapackage imports
@@ -52,7 +52,7 @@ def diff(file1, file2):
     sp = subprocess.Popen(diff_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (stout, stderr) = sp.communicate()
     if stderr:
-        print stderr
+        print(stderr)
     return stout
 
 def isX12Diff(fd1, fd2):
@@ -65,11 +65,11 @@ def isX12Diff(fd1, fd2):
     done2 = False
     while True:
         try:
-            seg1 = src1.next()
+            seg1 = next(src1)
         except StopIteration:
             done1 = True
         try:
-            seg2 = src2.next()
+            seg2 = next(src2)
         except StopIteration:
             done2 = True
         id1 = seg1.get_seg_id()
@@ -88,7 +88,7 @@ def get997BaseFilename(src_filename):
     else:
         filename = os.path.splitext(src_filename)[0] + '.997.base'
     if not os.path.isfile(filename):
-        raise TesterError, 'Base 997 not found: %s' % (os.path.basename(filename))
+        raise TesterError('Base 997 not found: %s' % (os.path.basename(filename)))
     return filename
 
 def getXSLTFilenames(src_filename):
@@ -106,7 +106,7 @@ def test_997(src_filename, param):
     logger.debug(src_filename)
     try:
         base_997 = get997BaseFilename(src_filename)
-        fd_997 = StringIO.StringIO()
+        fd_997 = io.StringIO()
         xslt_files = getXSLTFilenames(src_filename)
         pyx12.x12n_document.x12n_document(param, src_filename, fd_997, None, None, xslt_files)
         fd_997.seek(0)
@@ -190,7 +190,7 @@ def test_xml(src_filename, param, xmlout='simple'):
         sys.stderr.write('Error: Could not open files (%s)\n' % (src_filename))
         return False
     except KeyboardInterrupt:
-        print "\n[interrupt]"
+        print("\n[interrupt]")
     return True
 
 def main():

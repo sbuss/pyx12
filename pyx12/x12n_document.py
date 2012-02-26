@@ -18,15 +18,15 @@ import logging
 
 # Intrapackage imports
 import pyx12
-import error_handler
-import error_997
-import error_debug
-import error_html
-import errors
-import map_index
-import map_if
-import x12file
-from map_walker import walk_tree
+from . import error_handler
+from . import error_997
+from . import error_debug
+from . import error_html
+from . import errors
+from . import map_index
+from . import map_if
+from . import x12file
+from .map_walker import walk_tree
 
 def apply_loop_count(orig_node, new_map):
     """
@@ -99,15 +99,15 @@ def x12n_document(param, src_file, fd_997, fd_html,
     if fd_xmldoc:
         logger.debug('xmlout: %s' % (param.get('xmlout')))
         if param.get('xmlout') == 'simple':
-            import x12xml_simple
+            from . import x12xml_simple
             xmldoc = x12xml_simple.x12xml_simple(fd_xmldoc, 
                 param.get('simple_dtd'))
         elif param.get('xmlout') == 'idtag':
-            import x12xml_idtag
+            from . import x12xml_idtag
             xmldoc = x12xml_idtag.x12xml_idtag(fd_xmldoc, 
                 param.get('idtag_dtd'))
         elif param.get('xmlout') == 'idtagqual':
-            import x12xml_idtagqual
+            from . import x12xml_idtagqual
             xmldoc = x12xml_idtagqual.x12xml_idtagqual(fd_xmldoc, 
                 param.get('idtagqual_dtd'))
         else:
@@ -214,7 +214,7 @@ def x12n_document(param, src_file, fd_997, fd_html,
             err_node_list = []
             while True:
                 try:
-                    err_iter.next()
+                    next(err_iter)
                     err_node = err_iter.get_cur_node()
                     err_node_list.append(err_node)
                 except pyx12.errors.IterOutOfBounds:

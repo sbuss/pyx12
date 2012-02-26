@@ -8,6 +8,6 @@ for line in sys.stdin.readlines():
         m[line] += 1
     except:
         m[line] = 1
-for key in m.keys():
+for key in list(m.keys()):
     if m[key] > 1:
-        print key
+        print(key)

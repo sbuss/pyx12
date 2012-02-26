@@ -3,7 +3,7 @@ import unittest
 try:
     from io import StringIO
 except:
-    from StringIO import StringIO
+    from io import StringIO
 
 import tempfile
 
@@ -21,7 +21,7 @@ class TestWriter(unittest.TestCase):
         except:
             fd = StringIO()
         writer = XMLWriter(fd)
-        writer.push(u"x12err")
+        writer.push("x12err")
 
         while len(writer) > 0:
             writer.pop()
@@ -37,7 +37,7 @@ class TestWriter(unittest.TestCase):
         fd = os.fdopen(fdesc, 'w+b')
         #fd = file(filename, 'rw')
         writer = XMLWriter(fd)
-        writer.push(u"x12err")
+        writer.push("x12err")
 
         while len(writer) > 0:
             writer.pop()

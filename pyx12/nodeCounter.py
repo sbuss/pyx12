@@ -23,7 +23,7 @@ class NodeCounter(object):
     def __init__(self, initialCounts={}):
         self._dict = {}
 # copy constructor
-        for k, v in initialCounts.items():
+        for k, v in list(initialCounts.items()):
             if isinstance(k, pyx12.path.X12Path):
                 self._dict[k] = v
             else:

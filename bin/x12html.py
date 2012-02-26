@@ -59,7 +59,7 @@ def main():
     import getopt
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'c:dfl:m:p:qs:t:vx:P')
-    except getopt.error, msg:
+    except getopt.error as msg:
         usage()
         return False
     logger = logging.getLogger('pyx12')
@@ -131,7 +131,7 @@ def main():
             usage()
             return False
         except KeyboardInterrupt:
-            print "\n[interrupt]"
+            print("\n[interrupt]")
 
     return True
 

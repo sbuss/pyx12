@@ -15,7 +15,7 @@ Interface to X12 Errors
 import logging
 
 # Intrapackage imports
-from errors import EngineError, IterOutOfBounds, IterDone
+from .errors import EngineError, IterOutOfBounds, IterDone
 
 logger = logging.getLogger('pyx12.error_handler')
 

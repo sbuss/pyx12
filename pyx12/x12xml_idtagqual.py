@@ -18,10 +18,10 @@ import os.path
 import logging
 
 # Intrapackage imports
-from errors import *
-from x12xml import x12xml
-from xmlwriter import XMLWriter
-from map_walker import pop_to_parent_loop
+from .errors import *
+from .x12xml import x12xml
+from .xmlwriter import XMLWriter
+from .map_walker import pop_to_parent_loop
 
 logger = logging.getLogger('pyx12.x12xml.idtagqual')
 

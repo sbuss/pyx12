@@ -7,7 +7,7 @@ from pyx12.tests.x12file import *
 from helper import get_testcases, print_testcases, get_suite
 
 ns = pyx12.tests.x12file
-print pyx12.tests.x12file.__file__
+#print pyx12.tests.x12file.__file__
 if len(sys.argv) > 1 and sys.argv[1] == '-h':
     print_testcases(ns)
 else:

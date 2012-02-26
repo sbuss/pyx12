@@ -76,7 +76,7 @@ class table:
         #foreign keys
         if self.parent and self.parent.get_pk():
             if self.fk_name == '':
-                raise SQL_Error, 'Bad FK string %s' % (self.name)
+                raise SQL_Error('Bad FK string %s' % (self.name))
             parent_table = self.parent.name
             pk_parent = self.parent.get_pk()
             str1 += 'ALTER TABLE [%s] ADD\n' % (self.name)
@@ -106,7 +106,7 @@ class table:
             return path == '/'
 
     def _get_unique_field_name(self, id, name):
-        field_list = map(lambda x: x[0], self.fields)
+        field_list = [x[0] for x in self.fields]
         field_name = '%s_%s' % (id, format_name(name))
         if field_name not in field_list:
             return field_name
@@ -256,7 +256,7 @@ def gen_sql(map_root, prefix):
             elif node.data_type == 'R' or node.data_type[0] == 'N':
                 vtype = ' [float]'
             if vtype is None:
-                raise SQL_Error, 'bad type %s' % (node.data_type)
+                raise SQL_Error('bad type %s' % (node.data_type))
             vtype += ' NULL'
             vtype += '  -- %s(%s, %s)' % (node.data_type, node.min_len, node.max_len)
             field_name = cur_table._get_unique_field_name(node.id, \
@@ -284,7 +284,7 @@ def main():
     param = pyx12.params.params()
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'c:f:m:p:qv')
-    except getopt.error, msg:
+    except getopt.error as msg:
         usage()
         return False
     logger = logging.getLogger('pyx12')
@@ -320,14 +320,14 @@ def main():
             if not prefix:
                 prefix = map_file.split('.')[0]
             sql = gen_sql(pyx12.map_if.map_if(os.path.join(map_path, map_file), param), prefix)
-            print sql.generate()
+            print(sql.generate())
             #print sql
         except IOError:
             logger.error('Could not open files')
             usage()
             return False
         except KeyboardInterrupt:
-            print "\n[interrupt]"
+            print("\n[interrupt]")
 
     return True
 

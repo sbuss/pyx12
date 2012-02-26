@@ -1,11 +1,11 @@
 import unittest
 try:
-    from StringIO import StringIO
+    from io import StringIO
 except:
     from io import StringIO
 
 import pyx12.error_handler
-from pyx12.errors import *
+from pyx12.errors import X12Error
 import pyx12.rawx12file
 
 class X12fileTestCase(unittest.TestCase):

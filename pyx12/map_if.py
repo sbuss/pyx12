@@ -20,12 +20,12 @@ import re
 import xml.etree.cElementTree as et
 
 # Intrapackage imports
-from errors import IsValidError, EngineError
-import codes
-import dataele
-import path
-import validation
-from syntax import is_syntax_valid
+from .errors import IsValidError, EngineError
+from . import codes
+from . import dataele
+from . import path
+from . import validation
+from .syntax import is_syntax_valid
 
 MAXINT = 2147483647
 

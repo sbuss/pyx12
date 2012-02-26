@@ -4,7 +4,7 @@ import pdb
 def get_testcases(ns):
     ret = []
     ns_dict = ns.__dict__
-    for key in ns_dict.keys():
+    for key in list(ns_dict.keys()):
         try:
             if issubclass(ns_dict[key], unittest.TestCase):
                 ret.append(ns_dict[key].__name__)
@@ -15,7 +15,7 @@ def get_testcases(ns):
 
 def print_testcases(ns):
     for t in get_testcases(ns):
-        print t
+        print(t)
 
 def get_suite(ns, args):
     if args:

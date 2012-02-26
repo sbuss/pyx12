@@ -1,7 +1,7 @@
 import unittest
 import tempfile
 try:
-    from StringIO import StringIO
+    from io import StringIO
 except:
     from io import StringIO
 

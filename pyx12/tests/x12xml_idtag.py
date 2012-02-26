@@ -3,7 +3,7 @@ import sys
 try:
     from io import StringIO
 except:
-    from StringIO import StringIO
+    from io import StringIO
 
 from os.path import dirname, abspath, join, isdir, isfile
 

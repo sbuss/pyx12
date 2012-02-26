@@ -61,7 +61,7 @@ def main():
     import getopt
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'c:dfl:m:p:qs:t:vx:HP')
-    except getopt.error, msg:
+    except getopt.error as msg:
         usage()
         return False
     logger = logging.getLogger('pyx12')
@@ -146,8 +146,8 @@ def main():
                 import profile
                 prof_str = 'pyx12.x12n_document.x12n_document(param, src_filename, ' \
                         + 'fd_997, fd_html, None, xslt_files)'
-                print prof_str
-                print param
+                print(prof_str)
+                print(param)
                 profile.run(prof_str, 'pyx12.prof')
             else:
                 if pyx12.x12n_document.x12n_document(param=param, src_file=src_filename, 
@@ -167,7 +167,7 @@ def main():
             usage()
             return False
         except KeyboardInterrupt:
-            print "\n[interrupt]"
+            print("\n[interrupt]")
 
     return True
 
