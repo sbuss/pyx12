@@ -1,83 +1,51 @@
-#from distutils import core
-from distutils.core import setup
-from distutils.file_util import copy_file
-from distutils.dir_util import mkpath
-import os
-from os.path import join, splitext
-import sys
+from setuptools import setup
 
-import pyx12
 
-map_dir = 'share/pyx12/map'
-MAP_FILES = ['map/%s' % (file1) for file1 in 
-    filter(lambda x: splitext(x)[1] == '.xml', os.listdir('map'))]
-mkpath('build/bin')
-SCRIPTS = ('x12html.py', 'x12info.py', 'x12valid.py',
-    'x12norm.py', 'x12sql.py', 'x12xml.py', 'xmlx12.py')
-if sys.platform == 'win32':
-    for filename in SCRIPTS:
-        copy_file(join('bin', filename), 
-            join('build/bin', filename))
-else:
-    for filename in SCRIPTS:
-        target_script = splitext(filename)[0]
-        copy_file(join('bin', filename), 
-            join('build/bin', target_script))
-    SCRIPTS = [splitext(filename)[0] for filename in SCRIPTS]
-test_dir = 'share/pyx12/test'
-TEST_FILES = ['test/%s' % (file1) for file1 in 
-    filter(lambda x: splitext(x)[1] in ('.py', '.xml'),
-    os.listdir('test'))]
-TEST_DATA = ['test/files/%s' % (file1) for file1 in 
-    filter(lambda x: splitext(x)[1] 
-        in ('.base', '.txt', '.idtag', '.idtagqual', '.simple', '.xsl'),
-    os.listdir('test/files'))]
+__version__ = ""
+execfile('pyx12/version.py')
+long_description = """Pyx12 is a HIPAA X12 document validator and converter. It parses an ANSI X12N data file and
+validates it against a representation of the Implementation Guidelines for a HIPAA transaction. By default, it
+creates a 997 response for 4010 and a 999 response for 5010. It can create an html representation of the X12
+document or can translate to and from an XML representation of the data file."""
 
-kw = {  
-    'name': "pyx12",
-    'version': pyx12.__version__,
-    'long_description': pyx12.__doc__,
-    'license': 'BSD',
-    'description': "An X12 validator and converter",
-    'keywords': 'x12 hipaa healthcare edi',
-    'author': "John Holland",
-    'author_email': "jholland@kazoocmh.org",
-    'url': "http://pyx12.sourceforge.net/",
-    'download_url': "https://sourceforge.net/project/platformdownload.php?group_id=40379",
-    'platforms': 'All',
-    'packages': ['pyx12', 'pyx12.tests'],
-    'scripts': ['build/bin/%s' % (script) for script in SCRIPTS],
-    'data_files': [
-        (map_dir, MAP_FILES),
-        (map_dir, ['map/README', 'map/codes.xml', 'map/codes.xsd',
-            'map/comp_test.xml', 'map/map.xsd', 'map/maps.xml', 
-            'map/x12simple.dtd', 'map/dataele.xml', 'map/dataele.xsd']),
-        ('share/doc/pyx12', ['README.txt', 'LICENSE.txt',
-            'CHANGELOG.txt', 'INSTALL.txt']),
-        (test_dir, TEST_FILES),
-        (test_dir+'/files', TEST_DATA)
-    ],
-      #package_dir = {'': ''},
-}
-
-if sys.platform == 'win32':
-    # Update registry
-    kw['data_files'].append((os.path.join('share','pyx12'), ['bin/pyx12.conf.xml.sample']))
-    kw['data_files'].append(('etc', ['bin/pyx12.conf.xml.sample']))
-else:
-    kw['data_files'].append((os.path.join('share','pyx12'), ['bin/pyx12.conf.xml.sample']))
-    kw['data_files'].append(('etc', ['bin/pyx12.conf.xml.sample']))
-
-kw['classifiers'] = \
-    [
-     'Development Status :: 5 - Production/Stable',
-     'Environment :: Console',
-     'Intended Audience :: Healthcare Industry',
-     'Intended Audience :: Developers',
-     'License :: OSI Approved :: BSD License',
-     'Programming Language :: Python',
-     'Topic :: Office/Business',
-     'Topic :: Software Development :: Libraries :: Python Modules',
-     ]
-
-setup(**kw)
+setup(
+    name="pyx12",
+    version=__version__,
+    long_description=long_description,
+    license='BSD',
+    description="HIPAA X12 validator, parser and converter",
+    keywords='x12 hipaa healthcare edi',
+    author="John Holland",
+    author_email="jholland@kazoocmh.org",
+    url="http://github.com/azoner/pyx12#pyx12",
+    platforms='All',
+    packages=['pyx12', 'pyx12.scripts'],
+    package_data={
+        '': ['*.xml', '*.md'],
+        'pyx12': ['map/*.xml', 'map/*.xsd'],
+    },
+    #data_files=[('config', ['bin/pyx12.conf.xml.sample'])],
+    entry_points={
+        'console_scripts': [
+            'x12html = pyx12.scripts.x12html:main',
+            'x12valid = pyx12.scripts.x12valid:main',
+            'x12info = pyx12.scripts.x12info:main',
+            'x12norm = pyx12.scripts.x12norm:main',
+            'x12xml = pyx12.scripts.x12xml:main',
+            'xmlx12 = pyx12.scripts.xmlx12:main',
+        ]
+    },
+    #test_suite="pyx12.tests",
+    #install_requires=['distribute'],
+    #setup_requires=['distribute'],
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Healthcare Industry',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Programming Language :: Python',
+        'Topic :: Office/Business',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ]
+)

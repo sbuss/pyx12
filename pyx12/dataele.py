@@ -8,46 +8,47 @@
 #
 ######################################################################
 
-#    $Id$
-
 """
 Interface to normalized Data Elements
 """
 
-import os, os.path
+import os.path
 import xml.etree.cElementTree as et
+from pkg_resources import resource_stream
 
 # Intrapackage imports
 from pyx12.errors import EngineError
 
+
 class DataElementsError(Exception):
     """Class for data elements module errors."""
 
-    
+
 class DataElements(object):
     """
     Interface to normalized Data Elements
     """
 
-    def __init__(self, base_path):
+    def __init__(self, base_path=None):
         """
         Initialize the list of data elements
-        @param base_path: path to dataele.xml
+        @param base_path: deprecated
         @type base_path: string
 
         @note: self.dataele - map to the data element
         {ele_num: {data_type, min_len, max_len, name}}
         """
-        
-        self.dataele = {} 
-        code_file = os.path.join(base_path, 'dataele.xml')
-        for eElem in et.parse(code_file).iter('data_ele'):
+
+        self.dataele = {}
+        fd = resource_stream(__name__, os.path.join('map', 'dataele.xml'))
+        for eElem in et.parse(fd).iter('data_ele'):
             ele_num = eElem.get('ele_num')
             data_type = eElem.get('data_type')
             min_len = int(eElem.get('min_len'))
             max_len = int(eElem.get('max_len'))
             name = eElem.get('name')
-            self.dataele[ele_num] = {'data_type':data_type, 'min_len':min_len, 'max_len':max_len, 'name':name}
+            self.dataele[ele_num] = {'data_type': data_type, 'min_len':
+                                     min_len, 'max_len': max_len, 'name': name}
 
     def get_by_elem_num(self, ele_num):
         """
